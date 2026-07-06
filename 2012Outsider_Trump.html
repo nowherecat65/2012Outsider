@@ -6004,7 +6004,7 @@ campaignTrail_temp.candidate_state_multiplier_json = [
         "fields": {
             "candidate": 16,
             "state": 22,
-            "state_multiplier": 1.15
+            "state_multiplier": 1.149
         }
     },
     {
@@ -6463,7 +6463,7 @@ campaignTrail_temp.candidate_state_multiplier_json = [
         "fields": {
             "candidate": 17,
             "state": 22,
-            "state_multiplier": 1
+            "state_multiplier": 1.001
         }
     },
     {
@@ -14625,6 +14625,7 @@ cyoAdventure = function (a) {
     	if ([397].includes(ans)) {
         primary += 3;
         console.log("Primary + 3\nPrimary:", primary);
+    }
 
 	// Trump proves the pundits right
 	if (ans === 85) {
@@ -14658,7 +14659,6 @@ cyoAdventure = function (a) {
 		campaignTrail_temp.candidate_json[1]["fields"].color_hex = "#bf3131";
     }
 
-    }		
 	if ([391, 392].includes(ans)) {
         e.election_json[0].fields.has_visits = 0;
     }
@@ -14682,6 +14682,7 @@ cyoAdventure = function (a) {
         campaignTrail_temp.question_number = 31;
 		campaignTrail_temp.candidate_json[1]["fields"].color_hex = "#FF0000";
     }
+}
 
 
 
@@ -14732,8 +14733,18 @@ function onGameWindowChangeCandidates() {
         }
     }
 }
+}
 
 		
+campaignTrail_temp.vpSwitcher = function () {
+    let e = campaignTrail_temp;
+    let gameWindow = document.getElementById("game_window");
+    let pot_run_mat = campaignTrail_temp.running_mate_json || [];
+    if (!gameWindow || !Array.isArray(pot_run_mat) || pot_run_mat.length === 0) {
+        return;
+    }
+    let running_mate_options = pot_run_mat.map(f => `<option value="${f.pk}">${f.fields.first_name} ${f.fields.last_name}</option>`).join("");
+
 var changeGameDisp = (hide) => {
     disp = "";
     if (hide) {
@@ -14870,6 +14881,7 @@ var changeGameDisp = (hide) => {
             campaignTrail_temp.questions_json[28] = tunnel(20006)
         }
 		})
+}
 
   function campaignSummary() {
     const stateNamesMap = getStateNamesMap();  // Get map of state PKs to names
@@ -14910,6 +14922,10 @@ var changeGameDisp = (hide) => {
 }
 }
 			
+function handleMutations() {
+    onGameWindowChangeCandidates();
+}
+
 var element = document.getElementById('controlElement');
 if (!element) {
     let singleObserver = new MutationObserver(handleMutations);
